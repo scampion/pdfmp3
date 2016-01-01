@@ -1,0 +1,2 @@
+montage -page A4 *.jpg -tile 2x3   -geometry 220x220+5+5  -gravity center ../catalog.pdf
+
