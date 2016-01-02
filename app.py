@@ -35,26 +35,32 @@ def search(release_path, ext=None):
     if os.path.exists(ofile):
         return query, ofile
 
+    return jpgindir(release_path, query, ofile)
+
+
+def MusicBrainz(release_path, query, ofile):
     try:
         r = musicbrainzngs.search_releases(query.replace('-', ''))
         id = r['release-list'][0]['id']
         img = musicbrainzngs.get_image_list(id)
         url = img['images'][0]['image']
-        urllib.urlretrieve (url, ofile)
-        print ("OK " + ofile)
+        urllib.urlretrieve(url, ofile)
+        print("OK " + ofile)
         return query, ofile
     except Exception as e:
-        print ("Error for %s (%s)" % (release_path, e))
+        print("Error for %s (%s)" % (release_path, e))
         traceback.print_exc()
-        return APICFrame(release_path, query, ofile)
+        return genimage(release_path, query, ofile)
+
 
 def APICFrame(release_path, query, ofile):
     try:
         for f in os.listdir(release_path):
-            if f.endswith("mp3"):
+            if f.endswith("mp3") and not f.startswith("."):
                 mp3file = os.path.join(release_path, f)
+                print ("APIC search for ", mp3file)
                 file = File(mp3file)
-                if 'APIC' in file.tags:
+                if 'APIC:' in file.tags.keys():
                     artwork = file.tags['APIC:'].data
                     with open(ofile, 'wb') as img:
                        img.write(artwork)
@@ -63,15 +69,16 @@ def APICFrame(release_path, query, ofile):
     except Exception as e:
         print ("Error for %s (%s)" % (release_path, e))
         traceback.print_exc()
-    return jpgindir(release_path, query, ofile)
+    return MusicBrainz(release_path, query, ofile)
 
 def jpgindir(release_path, query, ofile):
     for f in os.listdir(release_path):
-        if f.endswith("jpg") or f.endswith('jpeg') or f.endswith('JPEG') or f.endswith('JPG'):
+        if (f.endswith("jpg") or f.endswith('jpeg') or f.endswith('JPEG') or f.endswith('JPG')) and not f.startswith("artcover") and not f.startswith("."):
             jpgfile = os.path.join(release_path, f)
-            shutil.copy2(jpgfile, ofile)
+            print ("Copy : ", jpgfile, ofile)
+            shutil.copy(jpgfile, ofile)
             return query, ofile
-    return genimage(release_path, query, ofile)
+    return APICFrame(release_path, query, ofile)
 
 def genimage(release_path, query, ofile):
     font = ImageFont.truetype("YanoneKaffeesatz-Bold.otf", 80 )
