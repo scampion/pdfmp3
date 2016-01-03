@@ -7,13 +7,13 @@ Optional a musicbrainz account could be useful, set the following env variables:
 - MUSICBRAINZ_LOGIN
 - MUSICBRAINZ_PWD
 
-# create art cover
-python app.py ~/Music/sandisk
-# build pdf 
-./run.sh ~/Music/sandisk
+	# create art cover
+	python app.py ~/Music/sandisk
+	# build pdf 
+	./run.sh ~/Music/sandisk
 
-#optional convert flac and m4a to mp3 
-./flac2mp3 ~/Music/sandisk
+	#optional convert flac and m4a to mp3 
+	./flac2mp3 ~/Music/sandisk
 
 
 Dependencies:
