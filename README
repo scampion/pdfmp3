@@ -1,2 +1,28 @@
-montage -page A4 *.jpg -tile 2x3   -geometry 220x220+5+5  -gravity center ../catalog.pdf
+Create a PDF art covert from an mp3 dir 
+
+Usage:
+-------
+
+# create art cover
+python app.py ~/Music/sandisk
+# build pdf 
+./run.sh ~/Music/sandisk
+
+#optional convert flac and m4a to mp3 
+./flac2mp3 ~/Music/sandisk
+
+
+Dependencies:
+-------------
+Python : musizbrainz and identicon
+Shell : montage from ImageMagick and ffmpeg for flac2mp3 
+Font : LatoB
+
+Author:
+-------
+Sébastien Campion
+
+Licence:
+---------
+AGPLv3 
 
