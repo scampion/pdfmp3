@@ -35,7 +35,7 @@ def search(release_path, ext=None):
     if os.path.exists(ofile):
         return query, ofile
 
-    return jpgindir(release_path, query, ofile)
+    return jpgindir(odir, query, ofile)
 
 
 def MusicBrainz(release_path, query, ofile):
@@ -74,6 +74,7 @@ def APICFrame(release_path, query, ofile):
 
 def jpgindir(release_path, query, ofile):
     for f in os.listdir(release_path):
+        print (f)
         if (f.endswith("jpg") or f.endswith('jpeg') or f.endswith('JPEG') or f.endswith('JPG')) and not f.startswith("artcover") and not f.startswith("."):
             jpgfile = os.path.join(release_path, f)
             print ("Copy : ", jpgfile, ofile)
@@ -118,8 +119,9 @@ for letter in sub_dir(rootdir):
         is_artist = True if sub_dir(release_or_artist) else False
         # print release_or_artist, " is artist ", is_artist, sub_dir(release_or_artist)
         if is_artist:
+            print ("Is artist dir ", release_or_artist)
             for release in sub_dir(release_or_artist):
-                name, jpgpath = search(release_or_artist, release)
+                name, jpgpath = search(release_or_artist, ext=release)
                 f1.write("%s ; %s\n" % (name, jpgpath))
         else:
             name, jpgpath = search(release_or_artist)
