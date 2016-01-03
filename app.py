@@ -60,12 +60,13 @@ def APICFrame(release_path, query, ofile):
                 mp3file = os.path.join(release_path, f)
                 print ("APIC search for ", mp3file)
                 file = File(mp3file)
-                if 'APIC:' in file.tags.keys():
-                    artwork = file.tags['APIC:'].data
-                    with open(ofile, 'wb') as img:
-                       img.write(artwork)
-                    print ("APIC img found ", query, ofile)
-                    return query, ofile
+                for k, v in file.tags.items():
+                    if k.startswith("APIC:"):
+                        artwork = v.data
+                        with open(ofile, 'wb') as img:
+                           img.write(artwork)
+                        print ("APIC img found ", query, ofile)
+                        return query, ofile
     except Exception as e:
         print ("Error for %s (%s)" % (release_path, e))
         traceback.print_exc()

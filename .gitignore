@@ -1,0 +1,7 @@
+.idea/
+*.pyc
+catalog.*
+tmp
+source.env
+python-musicbrainzngs
+
