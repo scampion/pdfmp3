@@ -3,6 +3,10 @@ Create a PDF art covert from an mp3 dir
 Usage:
 -------
 
+Optional a musicbrainz account could be useful, set the following env variables:
+- MUSICBRAINZ_LOGIN
+- MUSICBRAINZ_PWD
+
 # create art cover
 python app.py ~/Music/sandisk
 # build pdf 
